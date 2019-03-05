@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "stdio.h": "c",
-        "fillit.h": "c"
+        "fillit.h": "c",
+        "libft.h": "c"
     }
 }
