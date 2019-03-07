@@ -19,7 +19,8 @@ int main(int argc, char *argv[])
 		ft_strcat(buf, temp);
 		if (counter == 16)
 		{
-			converter(buf, &counter);
+			if(converter(buf, &counter))
+				return (0); 
 			lst = make_chain_lst(&head, &lst, buf, &idx);
 		}
 		ft_strdel(&temp);

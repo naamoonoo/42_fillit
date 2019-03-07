@@ -14,10 +14,11 @@ typedef struct		s_lst
 	struct s_lst	*prev;
 }					t_lst;
 
-void	converter(char *buf, int *counter);
+int		converter(char *buf, int *counter);
 int		is_same_shape(char *shape, char *moved, int space);
 char	*get_shape(char *buf, int space);
 char	*ft_move(char *t, char direction, int space);
+int		is_error_exist(char *buf);
 
 t_lst	*make_chain_lst(t_lst **head, t_lst **lst, char *buf, int *idx);
 char 	**possilbe_sets(t_lst **lst, int space);

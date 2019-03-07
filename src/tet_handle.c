@@ -1,6 +1,6 @@
 #include "fillit.h"
 
-void	converter(char *buf, int *counter)
+int		converter(char *buf, int *counter)
 {
 	int i;
 
@@ -12,6 +12,9 @@ void	converter(char *buf, int *counter)
 	}
 	buf[i] = '\0';
 	*counter = 0;
+	if (is_error_exist(buf))
+		return (1);
+	return (0);
 }
 
 char	*ft_move(char *t, char direction, int space)
