@@ -1,6 +1,6 @@
 #include "fillit.h"
 
-int		is_valid(char **ans, t_lst **t, int space)
+int		is_valid(char **ans, t_lst **t)
 {
 	char	*res;
 	int		len;
@@ -10,19 +10,13 @@ int		is_valid(char **ans, t_lst **t, int space)
 
 	i = 0;
 	counter = 0;
-	if (space == 0)
-		temp = (*t)->p_sets[(*t)->curr];
-	else //compare to empty one
-		temp = (*t)->shape;
+	temp = (*t)->p_sets[(*t)->curr];
 	len = ft_strlen(temp);
-	res = ft_itoa_base(ft_atoi_base(*ans, 2) | ft_atoi_base(temp, 2), 2, len);
+	res = bw_or(*ans, temp);
 	while (res[i])
 		counter += res[i++] == '1' ? 1 : 0;
-	if (counter == ((space == 0 ? (*t)->idx + 1 : space) * 4))
+	if (counter == (((*t)->idx + 1) * 4))
 	{
-		// printf("--------------------------------\n");
-		// pretty_printer(res, 4);
-		// printf("--------------------------------\n");
 		*ans = res;
 		return (1);
 	}
@@ -68,7 +62,7 @@ char	*get_shape(char *buf, int space)
 	j = 0;
 	temp = 0;
 	width = ft_pow(space, 2);
-	res = (char *)malloc(sizeof(char) * 5);
+	res = ft_memalloc(PIECE_SIZE + 1);
 	while (i < width)
 	{
 		temp += buf[i++] == '1' ? 1 : 0;
@@ -82,3 +76,8 @@ char	*get_shape(char *buf, int space)
 	return (res);
 }
 
+int		is_error_exist(char *buf)
+{
+	get_shape(buf, 4);
+	return (0);
+}

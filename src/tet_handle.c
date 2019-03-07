@@ -1,6 +1,6 @@
 #include "fillit.h"
 
-int		converter(char *buf, int *counter)
+int		converter_to_bin(char *buf, int *counter)
 {
 	int i;
 
@@ -12,30 +12,28 @@ int		converter(char *buf, int *counter)
 	}
 	buf[i] = '\0';
 	*counter = 0;
-	if (is_error_exist(buf))
+	if (i != 16 || is_error_exist(buf))
 		return (1);
 	return (0);
 }
 
 char	*ft_move(char *t, char direction, int space)
 {
-	int 	n_tmp;
 	int		width;
 	char	*temp;
 
 	if(!t)
 		return (NULL);
+	temp = NULL;
 	width = ft_pow(space, 2);
-	n_tmp = ft_atoi_base(t, 2);
 	if (direction == 'u')
-		n_tmp = n_tmp << space;
+		temp = bw_shift_left(t, space);
 	else if (direction == 'd')
-		n_tmp = n_tmp >> space;
+		temp = bw_shift_right(t, space);
 	else if (direction == 'r')
-		n_tmp = n_tmp >> 1;
+		temp =bw_shift_right(t, 1);
 	else if (direction == 'l')
-		n_tmp = n_tmp << 1;
-	temp = ft_itoa_base(n_tmp, 2, width);// 여기서 16이 고정값임 이거를 4*idx < ft_pow(n, 2); 형태의 값을 넣어야함
+		temp = bw_shift_left(t, 1);
 	if (is_same_shape(t, temp, space))
 		return (temp);
 	//need to free
@@ -72,18 +70,6 @@ void	adjust_shape_by_space(t_lst **t, int space)
 
 char	*detaching_self(char **ans, t_lst **t)
 {
-	char *self;
-	int temp;
-
-	self = (*t)->prev->p_sets[(*t)->prev->curr];
-
-	// printf("ans : \n");
-	// pretty_printer(*ans);
-	// printf("--- : \n");
-	// pretty_printer(self);
-	temp = ft_atoi_base(*ans, 2) ^ ft_atoi_base(self, 2);
-	*ans = ft_itoa_base(temp, 2, ft_strlen(self));
-	// printf("now : \n");
-	// pretty_printer(*ans);
+	*ans = bw_xor(*ans, (*t)->prev->p_sets[(*t)->prev->curr]);
 	return (*ans);
 }

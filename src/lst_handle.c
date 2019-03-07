@@ -10,6 +10,7 @@ t_lst	*make_chain_lst(t_lst **head, t_lst **lst, char *buf, int *idx)
 	t->p_sets = NULL;
 	t->idx = *idx;
 	t->curr = 0;
+	t->n_sets = 0;
 	t->next = NULL;
 	if (*idx == 0)
 	{
@@ -38,7 +39,8 @@ void	shape_and_sets(t_lst **head, int idx)
 	while(t)
 	{
 		adjust_shape_by_space(&t, space);
-
+		// printf("adjusted shape\n");
+		// pretty_printer(t->shape, space);
 		while(ft_move(t->shape, 'u', space))
 			t->shape = ft_move(t->shape, 'u', space);
 		while(ft_move(t->shape, 'l', space))
@@ -88,6 +90,7 @@ char 	**possilbe_sets(t_lst **lst, int space)
 		return (NULL);
 	i = 0;
 	idx = 0;
+	(*lst)->n_sets = ft_movable_amount(lst, 't', space);
 	p_sets[idx++] = (*lst)->shape;
 	horizontal = ft_movable_amount(lst, 'h', space);
 	vertical = ft_movable_amount(lst, 'v', space);
