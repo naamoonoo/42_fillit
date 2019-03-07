@@ -1,14 +1,5 @@
 #include "fillit.h"
 
-// typedef struct		s_list
-// {
-// 	char			*shpae;
-// 	int				idx;
-// 	int				counter;
-// 	struct s_lst	*next;
-// 	struct s_lst	*prev;
-// }					t_lst;
-
 t_lst	*make_chain_lst(t_lst **head, t_lst **lst, char *buf, int *idx)
 {
 	t_lst	*t;
@@ -16,11 +7,7 @@ t_lst	*make_chain_lst(t_lst **head, t_lst **lst, char *buf, int *idx)
 	if(!(t = malloc(sizeof(t_lst))))
 		return (0);
 	t->shape = ft_strdup(buf);
-	while(ft_move(t->shape, 'u'))
-		t->shape = ft_move(t->shape, 'u');
-	while(ft_move(t->shape, 'l'))
-		t->shape = ft_move(t->shape, 'l');
-	t->p_sets = possilbe_sets(&t);
+	t->p_sets = NULL;
 	t->idx = *idx;
 	t->curr = 0;
 	t->next = NULL;
@@ -35,10 +22,33 @@ t_lst	*make_chain_lst(t_lst **head, t_lst **lst, char *buf, int *idx)
 		(*lst)->next = t;
 	}
 	*idx += 1;
+	ft_memset(buf, 0, 16);
 	return (t);
 }
 
-int		ft_movable_amount(t_lst **lst, char way)
+void	shape_and_sets(t_lst **head, int idx)
+{
+	t_lst 	*t;
+	int		space;
+	
+	space = 1;
+	while (4 * idx > ft_pow(space, 2))
+		space++;
+	t = (*head);
+	while(t)
+	{
+		adjust_shape_by_space(&t, space);
+
+		while(ft_move(t->shape, 'u', space))
+			t->shape = ft_move(t->shape, 'u', space);
+		while(ft_move(t->shape, 'l', space))
+			t->shape = ft_move(t->shape, 'l', space);
+		t->p_sets = possilbe_sets(&t, space);
+		t = t->next;
+	}
+}
+
+int		ft_movable_amount(t_lst **lst, char way, int space)
 {
 	int hrz;
 	int vtc;
@@ -47,14 +57,14 @@ int		ft_movable_amount(t_lst **lst, char way)
 	hrz = 1;
 	vtc = 1;
 	temp = (*lst)->shape;
-	while(ft_move(temp, 'r'))
+	while(ft_move(temp, 'r', space))
 	{
-		temp = ft_move(temp, 'r');
+		temp = ft_move(temp, 'r', space);
 		hrz++;
 	}
-	while(ft_move(temp, 'd'))
+	while(ft_move(temp, 'd', space))
 	{
-		temp = ft_move(temp, 'd');
+		temp = ft_move(temp, 'd', space);
 		vtc++;
 	}
 	if (way == 'h')
@@ -66,7 +76,7 @@ int		ft_movable_amount(t_lst **lst, char way)
 	return (0);
 }
 
-char 	**possilbe_sets(t_lst **lst)
+char 	**possilbe_sets(t_lst **lst, int space)
 {
 	char	**p_sets;
 	int		horizontal;
@@ -74,22 +84,24 @@ char 	**possilbe_sets(t_lst **lst)
 	int		i;
 	int		idx;
 
-	if(!(p_sets = (char **)malloc(sizeof(char *) * (ft_movable_amount(lst, 't') + 1))))
+	if(!(p_sets = (char **)malloc(sizeof(char *) * (ft_movable_amount(lst, 't', space) + 1))))
 		return (NULL);
 	i = 0;
 	idx = 0;
 	p_sets[idx++] = (*lst)->shape;
-	horizontal = ft_movable_amount(lst, 'h');
-	vertical = ft_movable_amount(lst, 'v');
+	horizontal = ft_movable_amount(lst, 'h', space);
+	vertical = ft_movable_amount(lst, 'v', space);
 	while (i < vertical)
 	{
-		while (ft_move(p_sets[idx - 1], 'r'))
+		while (ft_move(p_sets[idx - 1], 'r', space))
 		{
-			p_sets[idx] = ft_move(p_sets[idx - 1], 'r');
+			p_sets[idx] = ft_move(p_sets[idx - 1], 'r', space);
 			idx++;
 		}
-		p_sets[idx++] = ft_move(p_sets[horizontal * i++], 'd');
+		p_sets[idx++] = ft_move(p_sets[horizontal * i++], 'd', space);
 	}
+	// printf("last pices is\n");
+	// pretty_printer(p_sets[idx - 2], space);
 	p_sets[--idx] = (void *)0;
 	return (p_sets);
 }

@@ -1,16 +1,5 @@
 #include "fillit.h"
 
-#include <stdio.h>
-
-// typedef struct		s_list
-// {
-// 	char			*shpae;
-// 	int				idx;
-// 	int				counter;
-// 	struct s_lst	*next;
-// 	struct s_lst	*prev;
-// }					t_lst;
-
 int main(int argc, char *argv[])
 {
 	int		fd;
@@ -32,11 +21,16 @@ int main(int argc, char *argv[])
 		{
 			converter(buf, &counter);
 			lst = make_chain_lst(&head, &lst, buf, &idx);
-			ft_memset(buf, 0, 16);
 		}
 		ft_strdel(&temp);
 	}
-	fillit(&head);
+	// pretty_printer(head->shape, 4);
+	// adjust_shape_by_space(&head, 7);
+	// adjust_shape_by_space(&head->next, 8);
+	// adjust_shape_by_space(&head->next->next, 9);
+	// adjust_shape_by_space(&head->next->next->next, 10);
+	make_fillit(&head, idx);//last idx will come
+
 	return (0);
 }
 	
