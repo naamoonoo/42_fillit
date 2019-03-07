@@ -2,7 +2,7 @@ NAME=fillit
 
 SRC=$(wildcard src/*.c)
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -I includes
+CFLAGS=-Wall -Wextra -Werror -Iincludes -g -fsanitize=address
 OBJ = $(patsubst %.c, %.o, $(SRC))
 
 all: $(NAME)

@@ -14,10 +14,10 @@
 
 int	ft_pow(int base, int times)
 {
-	int	res;
-
-	res = 1;
-	while (--times != 0)
-		res *= base;
-	return (res);
+	if (times == 0)
+		return (1);
+	else if (times == 1)
+		return (base);
+	else
+		return (ft_pow(base, times - 1) * base);
 }
