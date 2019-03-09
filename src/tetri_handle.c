@@ -1,22 +1,5 @@
 #include "fillit.h"
 
-int		converter_to_bin(char *buf, int *counter)
-{
-	int i;
-
-	i = -1;
-	buf[*counter] = '\0';
-	while (buf[++i])
-	{
-		buf[i] = buf[i] == '.' ? '0' : '1';
-	}
-	buf[i] = '\0';
-	*counter = 0;
-	if (i != 16 || is_error_exist(buf))
-		return (1);
-	return (0);
-}
-
 char	*ft_move(char *t, char direction, int space)
 {
 	int		width;
@@ -34,16 +17,26 @@ char	*ft_move(char *t, char direction, int space)
 		temp =bw_shift_right(t, 1);
 	else if (direction == 'l')
 		temp = bw_shift_left(t, 1);
-	if (is_same_shape(t, temp, space))
+	if (is_same_shape(t, temp, space) == YES)
 		return (temp);
 	//need to free
 	ft_strdel(&temp); // it has invalid form free!
 	return (NULL);
 }
 
+int		is_same_shape(char *shape, char *moved, int space)
+{
+	if (ft_strcmp(get_shape_hori(shape, space), 
+		get_shape_hori(moved, space)))
+		return (NO);
+	if (ft_strcmp(get_shape_vert(shape, space),
+	 	get_shape_vert(moved, space)))
+		return (NO);
+	return (YES);
+}
+
 void	adjust_shape_by_space(t_lst **t, int space)
 {
-	// idx에 1씩 더해가면서 사이즈 조정하기
 	int		i;
 	int		j;
 	char	*temp;
@@ -66,10 +59,4 @@ void	adjust_shape_by_space(t_lst **t, int space)
 	ft_strdel(&((*t)->shape));
 	(*t)->shape = ft_strdup(temp);
 	ft_strdel(&temp);
-}
-
-char	*detaching_self(char **ans, t_lst **t)
-{
-	*ans = bw_xor(*ans, (*t)->prev->p_sets[(*t)->prev->curr]);
-	return (*ans);
 }

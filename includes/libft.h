@@ -18,7 +18,7 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/stat.h>
-// # include <limits.h> //check https://projects.intra.42.fr/get_next_line/agusev 
+# include <limits.h> //check https://projects.intra.42.fr/get_next_line/agusev 
 
 # define BUFF_SIZE 32 
 # define MAX_FD 10000	// if he test success -> git push git/get_next_line_42 and update here too!
@@ -89,6 +89,8 @@ int					ft_start_idx(char const *s);
 void				ft_ulstr(char c);
 int					ft_hidenp(char *s1, char *s2);
 int					ft_strchr_idx(const char *s, int c);
+char				*ft_strtrim_by(char const *s, char condition);
+
 
 /*
 **---------------------number descriptor---------------------

@@ -9,16 +9,16 @@ void	make_fillit(t_lst **t, int space)
 
 	i = 0;
 	head = (*t);
+	space = shape_and_sets(&head, space < 2 ? space + 1 : space);
 	width = ft_pow(space, 2);
-	shape_and_sets(&head, space);
 	ans = ft_memalloc(width + 1);
 	while(i < width)
 		ans[i++] = '0';
-	if(fillit_btracking(&ans, &head))
-		return return_answer(&head, space);
+	if(IS_EXIST(fillit_btracking(&ans, &head)) == YES)
+		return print_answer(&head, space);
 	else
 	{
-		while(head)
+		while(IS_EXIST(head))
 		{
 			head->shape = head->p_sets[0];
 			head->curr = 0;
@@ -31,47 +31,72 @@ void	make_fillit(t_lst **t, int space)
 
 char	*fillit_btracking(char **ans, t_lst **t)
 {
-	if(is_valid(ans, t))
-		if((*t)->next)
+	if(is_valid_set(ans, t))
+		if(IS_EXIST((*t)->next) == YES)
 			return fillit_btracking(ans, &((*t)->next));
-	if(!is_valid(ans, t))
+	if(!is_valid_set(ans, t))
 	{
-		if ((*t)->curr + 1 != (*t)->n_sets)
+		if (IS_EXIST((*t)->curr + 1 != (*t)->n_sets) == YES)
 		{
 			(*t)->curr += 1;
-			// printf("일단 움직여 볼 수 있을때\n");
 			return fillit_btracking(ans, t);
 		}
 		else
-		{
-			// printf("더이상못움직여서 그 전으로 가야할때\n");
-			(*t)->curr = 0;
-			detaching_self(ans, t);
-			if((*t)->prev->curr + 1 != (*t)->prev->n_sets)
-			{
-				// printf("하나더 올릴 수 있음 지금 curr %d\n", (*t)->curr);	
-				(*t)->prev->curr += 1;
-				return fillit_btracking(ans, &(*t)->prev);
-			}
-			else
-			{
-				// printf("안됨/그 전으로 가야됨, 가기전에 바로 전꺼도 curr = 0으로 만들고가라\n");	
-				(*t)->prev->curr = 0;
-				// printf("%d == %d?", (*t)->prev->prev->curr + 1, (*t)->prev->prev->n_sets)
-				if(!(*t)->prev->prev)
-					return (NULL);
-				detaching_self(ans, &(*t)->prev);	
-				(*t)->prev->prev->curr += 1;
-				return fillit_btracking(ans, &(*t)->prev->prev);
-			}
-		}
+			return go_to_prev(ans, t);
 	}
 	return (*ans);
 }
 
+char	*go_to_prev(char **ans, t_lst **t)
+{
+	(*t)->curr = 0;
+	detaching_self(ans, t);
+	if(IS_EXIST((*t)->prev->curr + 1 != (*t)->prev->n_sets) == YES)
+	{
+		(*t)->prev->curr += 1;
+		return fillit_btracking(ans, &(*t)->prev);
+	}
+	else
+	{
+		(*t)->prev->curr = 0;
+		if(IS_EXIST((*t)->prev->prev) == NO)
+			return (NULL);
+		detaching_self(ans, &(*t)->prev);	
+		(*t)->prev->prev->curr += 1;
+		return fillit_btracking(ans, &(*t)->prev->prev);
+	}
+}
 
+int		is_valid_set(char **ans, t_lst **t)
+{
+	char	*res;
+	int		len;
+	int		i;
+	int		counter;
+	char	*temp;
 
+	i = 0;
+	counter = 0;
+	temp = (*t)->p_sets[(*t)->curr];
+	len = ft_strlen(temp);
+	res = bw_or(*ans, temp);
+	while (IS_EXIST(res[i]) == YES)
+		counter += res[i++] == '1' ? 1 : 0;
+	if (counter == (((*t)->idx + 1) * 4))
+	{
+		*ans = res;
+		return (1);
+	}
+	return (0);
+}
 
+char	*detaching_self(char **ans, t_lst **t)
+{
+	*ans = bw_xor(*ans, (*t)->prev->p_sets[(*t)->prev->curr]);
+	return (*ans);
+}
+
+// 
 
 void	pretty_printer(char *shape, int space)
 {
@@ -86,35 +111,4 @@ void	pretty_printer(char *shape, int space)
 		ft_putstr(ft_strsub(shape, idx * space , space));
 		ft_putchar('\n');
 	}
-}
-
-
-void	return_answer(t_lst **t, int space)
-{
-	//space 필요없음
-	t_lst	*lst;
-	char	*res;
-	int		i;
-	int		width;
-
-	width = ft_pow(space, 2);
-	res = ft_memalloc(width + 1);
-	lst = (*t);
-	while((i = -1) && lst)
-	{
-		while(++i < width)
-			if(lst->p_sets[lst->curr][i] == '1')
-				res[i] = lst->idx + 'A';
-		lst = lst->next;
-	}
-	while(++i < width)
-		if(!res[i])
-			res[i] = '.';
-	i = -1;
-	while(++i < space)
-	{
-		ft_putstr(ft_strsub(res, i * space , space));
-		ft_putchar('\n');
-	}
-	ft_strdel(&res);
 }
