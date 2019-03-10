@@ -5,7 +5,7 @@ char	*bw_or(char *b1, char *b2)
 	size_t	i;
 	size_t	len;
 	char 	*res;
-	
+
 	if (!b1 || !b2)
 		return (NULL);
 	i = 0;

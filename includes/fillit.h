@@ -49,7 +49,10 @@ int		mov_amount(t_lst **lst, char way, int space);
 
 int		is_same_shape(char *shape, char *moved, int space);
 char	*ft_move(char *t, char direction, int space);
-void	adjust_shape_by_space(t_lst **t, int space);
+void	adjust_shape_by_space(t_lst **t, int space, int tab);
+void	adjust_shape_for_small(t_lst **t, int *space);
+void	put_top_left(char **shape, int space);
+
 
 /* 
 ** -------------------fillit algirithm-------------------
@@ -76,7 +79,7 @@ char	*bw_shift_right(char *b1, size_t amount);
 ** -------------------result print-------------------
 */
 
-void	print_answer(t_lst **t, int space);
+void	print_answer(t_lst **t, int space, char **ans);
 int		print_error(void);
 
 void	pretty_printer(char *shape, int space);

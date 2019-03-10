@@ -7,6 +7,7 @@ t_lst	*make_chain_lst(t_lst **head, t_lst **lst, char *buf, int *idx)
 	if(!(t = malloc(sizeof(t_lst))))
 		return (0);
 	t->shape = ft_strdup(buf);
+	put_top_left(&t->shape, PIECE_SIZE);
 	t->p_sets = NULL;
 	t->idx = *idx;
 	t->curr = 0;
@@ -27,22 +28,21 @@ t_lst	*make_chain_lst(t_lst **head, t_lst **lst, char *buf, int *idx)
 	return (t);
 }
 
-int		shape_and_sets(t_lst **head, int idx)
+int		  shape_and_sets(t_lst **head, int idx)
 {
-	t_lst 	*t;
-	int		space;
+	static int	was_3 = 0;
+	t_lst 		*t;
+	int			space;
 	
 	space = 4;
 	while (4 * idx > ft_pow(space, 2))
 		space++;
 	t = (*head);
-	while(IS_EXIST(t) == YES)
+	was_3 += idx == 2 ? 1 : 0;
+	while (IS_EXIST(t) == YES)
 	{
-		adjust_shape_by_space(&t, space);
-		while(IS_EXIST(ft_move(t->shape, 'u', space)) == YES)
-			t->shape = ft_move(t->shape, 'u', space);
-		while(IS_EXIST(ft_move(t->shape, 'l', space)) == YES)
-			t->shape = ft_move(t->shape, 'l', space);
+		idx == 2 && was_3 == 1 ? adjust_shape_for_small(&t, &space) : 
+			adjust_shape_by_space(&t, space, was_3 == 1 ? 3 : PIECE_SIZE);
 		t->p_sets = possilbe_sets(&t, space);
 		t = t->next;
 	}
@@ -87,12 +87,12 @@ int		mov_amount(t_lst **lst, char way, int space)
 	hrz = 1;
 	vtc = 1;
 	temp = (*lst)->shape;
-	while(IS_EXIST(ft_move(temp, 'r', space)) == YES)
+	while (IS_EXIST(ft_move(temp, 'r', space)) == YES)
 	{
 		temp = ft_move(temp, 'r', space);
 		hrz++;
 	}
-	while(IS_EXIST(ft_move(temp, 'd', space)) == YES)
+	while (IS_EXIST(ft_move(temp, 'd', space)) == YES)
 	{
 		temp = ft_move(temp, 'd', space);
 		vtc++;

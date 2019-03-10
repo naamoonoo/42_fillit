@@ -12,11 +12,11 @@ int		reading_tetrimono(int fd, t_lst **head, int *idx)
 	{
 		count++;
 		ft_strcat(buf, temp);
-		if(ft_strlen(temp) > 4 || ft_strlen(buf) % 4 != 0)
+		if (ft_strlen(temp) > 4 || ft_strlen(buf) % 4 != 0)
 			return (ERROR);
 		else if (ft_strlen(buf) == 16 && count == 5)
 		{
-			if(converter(buf, &count) == ERROR)
+			if (converter(buf, &count) == ERROR)
 				return (ERROR);
 			lst = make_chain_lst(head, &lst, buf, idx);
 		}
@@ -27,55 +27,54 @@ int		reading_tetrimono(int fd, t_lst **head, int *idx)
 	else
 		return (ERROR);
 	return (SUCCESS);
-    // 이거 else없어도 되는거아님?? ㅅㅂ
 }
 
 int		converter(char *buf, int *count)
 {
 	int i;
-	int one_counter;
-	int zero_counter;
 
 	i = -1;
-	one_counter = 0;
-	zero_counter = 0;
 	while (buf[++i])
 	{
 		if (buf[i] == '#')
-		{
 			buf[i] = '1';
-			one_counter++;
-		}
 		else if (buf[i] == '.')
-		{
 			buf[i] = '0';
-			zero_counter++;
-		}
+		else
+			return (ERROR);
 	}
 	*count = 0;
-	if (i == 16 && one_counter == 4 && zero_counter == 12 
-        && is_valid_shape(buf) != ERROR)
-		return (0);
-	return (ERROR);
+	if (i != 16 || is_valid_shape(buf) == ERROR)
+		return (ERROR);
+	return (0);
 }
 
 int		is_valid_shape(char *shape)
 {
-	int hor;
-	int vert;
+	int i;
+	int count;
+	int sum_of_hor_vert;
 	char *temp;
 
+	i = 0;
+	count = 0;
 	temp = get_shape_vert(shape, PIECE_SIZE);
-	if (ft_strchr(temp, '0'))
+	while (temp[i])
+		count += temp[i++] - '0';
+	if (IS_EXIST(ft_strchr(temp, '0')) == YES || count != PIECE_SIZE)
 		return (ERROR);
-	vert = ft_strlen(temp);
+	sum_of_hor_vert = ft_strlen(temp);
 	ft_strdel(&temp);
 	temp = get_shape_hori(shape, PIECE_SIZE);
-	if (ft_strchr(temp, '0'))
+	count = 0;
+	i = 0;
+	while (temp[i])
+		count += temp[i++] - '0';
+	if (IS_EXIST(ft_strchr(temp, '0')) == YES || count != PIECE_SIZE)
 		return (ERROR);
-	hor = ft_strlen(temp);
+	sum_of_hor_vert += ft_strlen(temp);
 	ft_strdel(&temp);
-	if (hor + vert != 4 && hor + vert != 5)
+	if (sum_of_hor_vert != 4 && sum_of_hor_vert != 5)
 		return (ERROR);
 	return (0);
 }
@@ -119,7 +118,7 @@ char	*get_shape_hori(char *shape, int space)
 	i = -1;
 	temp = ft_memalloc(space + 1);
 	ft_memset(temp, '0', space);
-	while(++i < space)
+	while (++i < space)
 	{
 		j = -1;
 		while (++j < space)
