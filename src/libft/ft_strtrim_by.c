@@ -16,9 +16,11 @@ char	*ft_strtrim_by(char const *s, char condition)
 {
 	int		start;
 	int		len;
+	int		i;
 	char	*res;
 
 	start = 0;
+	i = 0;
 	if (s == NULL)
 		return (NULL);
 	while (s[start] == condition)
@@ -29,8 +31,7 @@ char	*ft_strtrim_by(char const *s, char condition)
 	while (len > 0 && s[len - 1] == condition)
 		len--;
 	len = len == 0 ? len : len - start;
-	if (!(res = (char *)malloc((len + 1) * sizeof(char))))
-		return (NULL);
 	res = ft_strsub(s, start, len);
 	return (res);
 }
+

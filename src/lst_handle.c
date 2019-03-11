@@ -1,11 +1,10 @@
 #include "fillit.h"
 
-t_lst	*make_chain_lst(t_lst **head, t_lst **lst, char *buf, int *idx)
+void	make_chain_lst(t_lst **lst, char *buf, int *idx)
 {
 	t_lst	*t;
 
-	if(!(t = malloc(sizeof(t_lst))))
-		return (0);
+	t = ft_memalloc(sizeof(t_lst));
 	t->shape = ft_strdup(buf);
 	put_top_left(&t->shape, PIECE_SIZE);
 	t->p_sets = NULL;
@@ -13,19 +12,15 @@ t_lst	*make_chain_lst(t_lst **head, t_lst **lst, char *buf, int *idx)
 	t->curr = 0;
 	t->n_sets = 0;
 	t->next = NULL;
-	if (*idx == 0)
-	{
-		t->prev = NULL;
-		(*head) = t;
-	}
-	else
+	t->prev = NULL;
+	if (t->idx != 0)
 	{
 		t->prev = (*lst);
 		(*lst)->next = t;
 	}
 	*idx += 1;
 	ft_memset(buf, 0, 16);
-	return (t);
+	(*lst) = t;
 }
 
 int		  shape_and_sets(t_lst **head, int idx)
@@ -97,6 +92,7 @@ int		mov_amount(t_lst **lst, char way, int space)
 		temp = ft_move(temp, 'd', space);
 		vtc++;
 	}
+	ft_strdel(&temp);
 	if (way == 'h')
 		return (hrz);
 	else if (way == 'v')

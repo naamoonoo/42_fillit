@@ -16,8 +16,10 @@ char	*ft_strtrim(char const *s)
 {
 	int		start;
 	int		len;
+	int		i;
 	char	*res;
 
+	i = 0;
 	if (s == NULL)
 		return (NULL);
 	start = ft_start_idx(s);
@@ -27,8 +29,8 @@ char	*ft_strtrim(char const *s)
 	while (len > 0 && ft_is_space(s[len - 1]))
 		len--;
 	len = len == 0 ? len : len - start;
-	if (!(res = (char *)malloc((len + 1) * sizeof(char))))
-		return (NULL);
-	res = ft_strsub(s, start, len);
+	res = ft_memalloc(len + 1);
+	while (start < len)
+		res[i++] = s[start++];
 	return (res);
 }

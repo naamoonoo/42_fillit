@@ -23,23 +23,19 @@ char	*ft_move(char *t, char direction, int space)
 
 void		put_top_left(char **shape, int space)
 {
-	// char *temp;
+	char *temp;
 
-	while (IS_EXIST(ft_move(*shape, 'u', space)) == YES)
+	while ((temp = ft_move(*shape, 'u', space)))
 	{
-		*shape = ft_move(*shape, 'u', space);
-		// ft_strdel(shape);
-		// *shape = temp;
-		// ft_strdel(&temp);
-		// pretty_printer(*shape, space);
+		ft_strdel(shape);
+		*shape = ft_strdup(temp);
+		ft_strdel(&temp);
 	}
-	while (IS_EXIST(ft_move(*shape, 'l', space)) == YES)
+	while ((temp = ft_move(*shape, 'l', space)))
 	{
-		*shape = ft_move(*shape, 'l', space);
-		// ft_strdel(shape);
-		// *shape = temp;
-		// ft_strdel(&temp);
-		// pretty_printer(*shape, space);
+		ft_strdel(shape);
+		*shape = ft_strdup(temp);
+		ft_strdel(&temp);
 	}
 }
 

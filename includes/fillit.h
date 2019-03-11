@@ -2,6 +2,7 @@
 # define FILLIT_H
 
 #include "libft.h"
+// #include "jfj.h"
 #include <stdio.h> //!!!!!!delete
 
 # define PIECE_SIZE 4
@@ -38,7 +39,7 @@ char	*get_shape_hori(char *shape, int space);
 ** -------------------double linked lst handle-------------------
 */
 
-t_lst	*make_chain_lst(t_lst **head, t_lst **lst, char *buf, int *idx);
+void	make_chain_lst(t_lst **lst, char *buf, int *idx);
 int		shape_and_sets(t_lst **head, int space);
 char 	**possilbe_sets(t_lst **lst, int space);
 int		mov_amount(t_lst **lst, char way, int space);
@@ -83,6 +84,8 @@ void	print_answer(t_lst **t, int space, char **ans);
 int		print_error(void);
 
 void	pretty_printer(char *shape, int space);
+char	*ft_strtrim_by(char const *s, char condition);
+
 // void	testing_tool(char *shape, char dir);
 
 #endif
