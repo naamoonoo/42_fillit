@@ -9,23 +9,22 @@ int		reading_tetrimono(int fd, t_lst **lst, int *idx)
 	count = 0;
 	while (get_next_line(fd, &temp) > 0)
 	{
-		
 		ft_strcat(buf, temp);
 		count++;
-		if (ft_strlen(temp) > 4 || ft_strlen(buf) % 4 != 0)
+		if (ft_strlen(buf) > 16 || ft_strlen(temp) > 4 || ft_strlen(buf) % 4 != 0)
 			return (ERROR);
 		else if (ft_strlen(buf) == 16 && count == 5)
 		{
 			if (converter(buf, &count) == ERROR)
 				return (ERROR);
 			make_chain_lst(lst, buf, idx);
-			// return (0); // testing!!
 		}
 		ft_strdel(&temp);
 	}
-	if (ft_strlen(buf) != 16 || count != 4 || converter(buf, &count) == ERROR)
+	if (ft_strlen(buf) == 16 && count == 4 && (converter(buf, &count) != ERROR))
+		make_chain_lst(lst, buf, idx);
+	else
 		return (ERROR);
-	make_chain_lst(lst, buf, idx);
 	return (SUCCESS);
 }
 
@@ -94,7 +93,6 @@ char	*get_shape_vert(char *shape, int space)
 	temp = 0;
 	width = ft_pow(space, 2);
 	tmp = ft_memalloc(space + 1);
-	// ft_memset(res, '0', space); 이거로 바꿀순 없을까?
 	while (i < width)
 	{
 		temp += shape[i++] == '1' ? 1 : 0;
@@ -108,7 +106,6 @@ char	*get_shape_vert(char *shape, int space)
 	res = ft_strtrim_by(tmp, '0');
 	ft_strdel(&tmp);
 	return (res);
-	//need to free
 }
 
 char	*get_shape_hori(char *shape, int space)
@@ -130,5 +127,4 @@ char	*get_shape_hori(char *shape, int space)
 	res = ft_strtrim_by(temp, '0');
 	ft_strdel(&temp);
 	return (res);
-	//need to free
 }

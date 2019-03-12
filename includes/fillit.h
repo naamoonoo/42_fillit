@@ -84,7 +84,8 @@ void	print_answer(t_lst **t, int space, char **ans);
 int		print_error(void);
 
 void	pretty_printer(char *shape, int space);
-char	*ft_strtrim_by(char const *s, char condition);
+void	freeing_whole_lst(t_lst **lst);
+
 
 // void	testing_tool(char *shape, char dir);
 

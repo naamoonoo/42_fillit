@@ -19,7 +19,6 @@ void	print_answer(t_lst **t, int space, char **ans)
 				res[i] = (*t)->idx + 'A';
 		(*t) = (*t)->next;
 	}
-	free(*t);
 	while (++i < width)
 		if(IS_EXIST(res[i]) == NO)
 			res[i] = '.';
@@ -58,29 +57,29 @@ int		two_by_two_one_piece(t_lst **head)
 	return (ret);
 }
 
-// void	freeing_whole_idx(t_lst **lst, int idx)
-// {
-// 	int 	i;
-// 	t_lst 	**t_arr;
+void	freeing_whole_lst(t_lst **lst)
+{
+	int		i;
+	t_lst	*t;
 
-// 	t_arr = (t_lst **)malloc(sizeof(t_lst *) * idx);
-// 	while ((*lst))
-// 	{
-// 		t_arr[(*lst)->idx] = (*lst);
-// 		(*lst) = (*lst)->next;
-// 	}
-// 	i = 0;
-// 	while (t_arr[i])
-// 		free(t_arr[i++]);
-// 	free(t_arr);
-// }
+	while ((*lst))
+	{
+		t = (*lst);
+		(*lst) = (*lst)->next;
+		ft_strdel(&t->shape);
+		i = 0;
+		// while(t->p_sets[i])4
+		// 	ft_strdel(&t->p_sets[i++]);
+		free(t->p_sets);
+		// free(&t);
+	}
+}
 
 int main(int argc, char *argv[])
 {
 	int		fd;
 	int		idx;
 	t_lst	*lst;
-	// t_lst	*lst;
 
 	idx = 0;
 	if (argc != 2)
@@ -94,26 +93,20 @@ int main(int argc, char *argv[])
 		return (print_error());
 	while(lst->prev)
 		lst = lst->prev;
-	// freeing_whole_idx(&lst, idx);
-	// printf("%d, %s", lst->idx, lst->shape);
-
-	
-	// printf("%s\n", make_chain_lst(&head, "1100110000000000", 0)->shape);
-
-	// t_lst *curr = lst;
-	// while(curr)
-	// {
-	// 	t_lst *next = lst->next;
-	// 	free(curr);
-	// 	curr = next;
-	// }
-
-	// leaks();
 	if (idx == 1 && two_by_two_one_piece(&lst))
 		return (0);
 	make_fillit(&lst, idx);
-	while(1)
-		sleep(1);
+	// int i;
+	// while (lst)
+	// {
+	// 	i = 0;
+	// 	while(lst->p_sets[i])
+	// 		printf("%s\n", lst->p_sets[i++]);
+	// 	lst = lst->next;
+	// }
+	freeing_whole_lst(&lst);
+	// while(1)
+	// 	sleep(1);
 	
 	return (0);
 }

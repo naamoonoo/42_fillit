@@ -20,6 +20,7 @@ void	make_chain_lst(t_lst **lst, char *buf, int *idx)
 	}
 	*idx += 1;
 	ft_memset(buf, 0, 16);
+	// free(lst);
 	(*lst) = t;
 }
 
@@ -51,21 +52,22 @@ char 	**possilbe_sets(t_lst **lst, int space)
 	int		vertical;
 	int		i;
 	int		idx;
+	char	*tmp;
 
-	if(!(p_sets = (char **)malloc(sizeof(char *) * (mov_amount(lst, 't', space) + 1))))
+	(*lst)->n_sets = mov_amount(lst, 't', space);
+	if(!(p_sets = (char **)malloc(sizeof(char *) * ((*lst)->n_sets + 1))))
 		return (NULL);
 	i = 0;
 	idx = 0;
-	(*lst)->n_sets = mov_amount(lst, 't', space);
 	p_sets[idx++] = (*lst)->shape;
 	horizontal = mov_amount(lst, 'h', space);
 	vertical = mov_amount(lst, 'v', space);
 	while (i < vertical)
 	{
-		while (IS_EXIST(ft_move(p_sets[idx - 1], 'r', space)) == YES)
+		while ((tmp = ft_move(p_sets[idx - 1], 'r', space)))
 		{
-			p_sets[idx] = ft_move(p_sets[idx - 1], 'r', space);
-			idx++;
+			p_sets[idx++] = ft_strdup(tmp);
+			ft_strdel(&tmp);
 		}
 		p_sets[idx++] = ft_move(p_sets[horizontal * i++], 'd', space);
 	}
@@ -77,22 +79,28 @@ int		mov_amount(t_lst **lst, char way, int space)
 {
 	int hrz;
 	int vtc;
+	char *shape;
 	char *temp;
 
 	hrz = 1;
 	vtc = 1;
-	temp = (*lst)->shape;
-	while (IS_EXIST(ft_move(temp, 'r', space)) == YES)
+	shape = ft_strdup((*lst)->shape);
+	while ((temp = ft_move(shape, 'r', space)))
 	{
-		temp = ft_move(temp, 'r', space);
+		ft_strdel(&shape);
+		shape = ft_strdup(temp);
+		ft_strdel(&temp);
 		hrz++;
 	}
-	while (IS_EXIST(ft_move(temp, 'd', space)) == YES)
+	while ((temp = ft_move(shape, 'd', space)))
 	{
-		temp = ft_move(temp, 'd', space);
+		ft_strdel(&shape);
+		shape = ft_strdup(temp);
+		ft_strdel(&temp);
 		vtc++;
 	}
 	ft_strdel(&temp);
+	ft_strdel(&shape);
 	if (way == 'h')
 		return (hrz);
 	else if (way == 'v')

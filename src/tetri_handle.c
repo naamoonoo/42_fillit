@@ -8,7 +8,7 @@ char	*ft_move(char *t, char direction, int space)
 		return (NULL);
 	temp = NULL;
 	if (direction == 'u')
-		temp = bw_shift_left(t, space);
+		temp = bw_shift_left(t, space) ;
 	else if (direction == 'd')
 		temp = bw_shift_right(t, space);
 	else if (direction == 'r')
@@ -44,16 +44,25 @@ int		is_same_shape(char *shape, char *moved, int space)
 	char *temp;
 	char *temp2;
 
+
 	temp = get_shape_hori(shape, space);
 	temp2 = get_shape_hori(moved, space);
 	if (ft_strcmp(temp, temp2) != 0)
+	{
+		ft_strdel(&temp);
+		ft_strdel(&temp2);
 		return (NO);
+	}
 	ft_strdel(&temp);
 	ft_strdel(&temp2);
 	temp = get_shape_vert(shape, space);
 	temp2 = get_shape_vert(moved, space);
 	if (ft_strcmp(temp, temp2) != 0 )
+	{
+		ft_strdel(&temp);
+		ft_strdel(&temp2);
 		return (NO);
+	}
 	ft_strdel(&temp);
 	ft_strdel(&temp2);
 	return (YES);

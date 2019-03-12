@@ -19,12 +19,14 @@ void	make_fillit(t_lst **t, int space)
 	else
 	{
 		while (IS_EXIST(head))
-		{
+		{	
+			// free(head->shape);
 			head->shape = head->p_sets[0];
-			head->curr = 0;
-			// while (*head->p_sets)
-			// 	free(*head->p_sets++);
+			// i = 0;
+			// while(head->p_sets[i])
+			// 	free(head->p_sets[i++]);
 			free(head->p_sets);
+			head->curr = 0;
 			head = head->next;
 		}
 		ft_strdel(&ans);
@@ -32,98 +34,98 @@ void	make_fillit(t_lst **t, int space)
 	}
 }
 
-// char	*fillit_btracking(char **ans, t_lst **t)
-// {
-// 	if (is_valid_set(ans, t) == YES)
-// 		if (IS_EXIST((*t)->next) == YES)
-// 		{
-// 			// printf("나는 넣었음, 다음꺼 넣으러 갑시다!\n");
-// 			return (fillit_btracking(ans, &((*t)->next)));
-// 		}
-// 	if (is_valid_set(ans, t) == NO)
-// 	{
-// 		if ((*t)->curr + 1 != (*t)->n_sets)
-// 		{
-// 			(*t)->curr += 1;
-// 			// printf("나는 안되고 내 다음애 있으니까 걔 넣어보셈\n");
-// 			return (fillit_btracking(ans, t));
-// 		}
-// 		else
-// 		// {printf("나는 이미글름, 내 앞에 애로 가쟈\n");
-// 				return (go_to_prev(ans, t));
-// 				// }
-// 	}
-// 	return (*ans);
-// }
-
-// char	*go_to_prev(char **ans, t_lst **t)
-// {
-// 	(*t)->curr = 0;
-// 	detaching_self(ans, t);
-// 	if ((*t)->prev->curr + 1 != (*t)->prev->n_sets)
-// 	{
-// 		(*t)->prev->curr += 1;
-// 		// printf("내 앞에놈 하나더 옮겨볼수있음\n");
-// 		return (fillit_btracking(ans, &(*t)->prev));
-// 	}
-// 	else
-// 	{
-// 		(*t)->prev->curr = 0;
-// 		if (IS_EXIST((*t)->prev->prev) == NO)
-// 		// {printf("내 앞에 앞에놈도 더이상 못옮긴댜\n");
-// 			return (NULL);
-// 			// }
-// 		detaching_self(ans, &(*t)->prev);	
-// 		(*t)->prev->prev->curr += 1;
-// 		// printf("휴 내 앞에 앞에놈 하나 더 ㄱㄴ 고고링\n");
-// 		return (fillit_btracking(ans, &(*t)->prev->prev));
-// 	}
-// }
-
 char	*fillit_btracking(char **ans, t_lst **t)
 {
-	while((*t))
-	{
-		if (is_valid_set(ans, t) == YES)
+	if (is_valid_set(ans, t) == YES)
+		if (IS_EXIST((*t)->next) == YES)
 		{
-			if (IS_EXIST((*t)->next) == YES)
-			{
-				(*t) = (*t)->next;
-				continue ;
-			}
-			return (*ans);
+			// printf("나는 넣었음, 다음꺼 넣으러 갑시다!\n");
+			return (fillit_btracking(ans, &((*t)->next)));
+		}
+	if (is_valid_set(ans, t) == NO)
+	{
+		if ((*t)->curr + 1 != (*t)->n_sets)
+		{
+			(*t)->curr += 1;
+			// printf("나는 안되고 내 다음애 있으니까 걔 넣어보셈\n");
+			return (fillit_btracking(ans, t));
 		}
 		else
-		{
-			if ((*t)->curr + 1 != (*t)->n_sets)
-			{
-				(*t)->curr += 1;
-				continue ;
-			}
-			else
-			{
-				(*t)->curr = 0;
-				detaching_self(ans, t);
-				if ((*t)->prev->curr + 1 != (*t)->prev->n_sets)
-				{
-					(*t)->prev->curr += 1;
-					(*t) = (*t)->prev;
-					continue ;
-				}
-				else
-				{
-					(*t)->prev->curr = 0;
-					if (IS_EXIST((*t)->prev->prev) == NO)
-						return (NULL);
-					detaching_self(ans, &(*t)->prev);	
-					(*t)->prev->prev->curr += 1;
-					(*t) = (*t)->prev->prev;
-				}
-			}
-		}
+		// {printf("나는 이미글름, 내 앞에 애로 가쟈\n");
+				return (go_to_prev(ans, t));
+				// }
 	}
 	return (*ans);
 }
+
+char	*go_to_prev(char **ans, t_lst **t)
+{
+	(*t)->curr = 0;
+	detaching_self(ans, t);
+	if ((*t)->prev->curr + 1 != (*t)->prev->n_sets)
+	{
+		(*t)->prev->curr += 1;
+		// printf("내 앞에놈 하나더 옮겨볼수있음\n");
+		return (fillit_btracking(ans, &(*t)->prev));
+	}
+	else
+	{
+		(*t)->prev->curr = 0;
+		if (IS_EXIST((*t)->prev->prev) == NO)
+		// {printf("내 앞에 앞에놈도 더이상 못옮긴댜\n");
+			return (NULL);
+			// }
+		detaching_self(ans, &(*t)->prev);	
+		(*t)->prev->prev->curr += 1;
+		// printf("휴 내 앞에 앞에놈 하나 더 ㄱㄴ 고고링\n");
+		return (fillit_btracking(ans, &(*t)->prev->prev));
+	}
+}
+
+// char	*fillit_btracking(char **ans, t_lst **t)
+// {
+// 	while((*t))
+// 	{
+// 		if (is_valid_set(ans, t) == YES)
+// 		{
+// 			if (IS_EXIST((*t)->next) == YES)
+// 			{
+// 				(*t) = (*t)->next;
+// 				continue ;
+// 			}
+// 			return (*ans);
+// 		}
+// 		else
+// 		{
+// 			if ((*t)->curr + 1 != (*t)->n_sets)
+// 			{
+// 				(*t)->curr += 1;
+// 				continue ;
+// 			}
+// 			else
+// 			{
+// 				(*t)->curr = 0;
+// 				detaching_self(ans, t);
+// 				if ((*t)->prev->curr + 1 != (*t)->prev->n_sets)
+// 				{
+// 					(*t)->prev->curr += 1;
+// 					(*t) = (*t)->prev;
+// 					continue ;
+// 				}
+// 				else
+// 				{
+// 					(*t)->prev->curr = 0;
+// 					if (IS_EXIST((*t)->prev->prev) == NO)
+// 						return (NULL);
+// 					detaching_self(ans, &(*t)->prev);	
+// 					(*t)->prev->prev->curr += 1;
+// 					(*t) = (*t)->prev->prev;
+// 				}
+// 			}
+// 		}
+// 	}
+// 	return (*ans);
+// }
 	
 
 // char	*go_to_prev(char **ans, t_lst **t)
