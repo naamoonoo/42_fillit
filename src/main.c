@@ -66,12 +66,16 @@ void	freeing_whole_lst(t_lst **lst)
 	{
 		t = (*lst);
 		(*lst) = (*lst)->next;
-		ft_strdel(&t->shape);
+		free(&t->shape);
 		i = 0;
-		// while(t->p_sets[i])4
-		// 	ft_strdel(&t->p_sets[i++]);
+		while(t->p_sets[i])
+		{
+			free(&t->p_sets[i]);
+			i++;
+			
+		}
 		free(t->p_sets);
-		// free(&t);
+
 	}
 }
 
@@ -96,17 +100,28 @@ int main(int argc, char *argv[])
 	if (idx == 1 && two_by_two_one_piece(&lst))
 		return (0);
 	make_fillit(&lst, idx);
-	// int i;
-	// while (lst)
-	// {
-	// 	i = 0;
-	// 	while(lst->p_sets[i])
-	// 		printf("%s\n", lst->p_sets[i++]);
-	// 	lst = lst->next;
-	// }
+
+
+	while (lst)
+	{
+		free(lst->shape);
+		// printf("%s will be freed\n", lst->p_sets[lst->n_sets - 1]);
+		int i = 0;
+		while(lst->p_sets[i])
+		{
+			printf("%s is freed\n", lst->p_sets[i++]);
+			// free(&lst->p_sets[lst->n_sets - 1]);
+			
+		}
+		free(lst->p_sets);
+		free(lst);
+		lst = lst->next;
+	}
+
+
 	freeing_whole_lst(&lst);
-	// while(1)
-	// 	sleep(1);
+	while(1)
+		sleep(1);
 	
 	return (0);
 }
