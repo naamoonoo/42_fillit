@@ -78,7 +78,6 @@ int		is_valid_shape(char *shape)
 	return (0);
 }
 
-
 char	*get_shape_vert(char *shape, int space)
 {
 	int i;

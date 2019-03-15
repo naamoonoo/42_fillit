@@ -84,6 +84,59 @@ char	*go_to_prev(char **ans, t_lst **t)
 	}
 }
 
+int		is_valid_set(char **ans, t_lst **t)
+{
+	char	*res;
+	int		len;
+	int		i;
+	int		counter;
+	char	*temp;
+
+	i = 0;
+	counter = 0;
+	temp = (*t)->p_sets[(*t)->curr];
+	len = ft_strlen(temp);
+	res = bw_or(*ans, temp);
+	while (IS_EXIST(res[i]) == YES)
+		counter += res[i++] == '1' ? 1 : 0;
+	if (counter == (((*t)->idx + 1) * 4))
+	{
+		ft_strdel(ans);
+		*ans = ft_strdup(res);
+		ft_strdel(&res);
+		return (YES);
+	}
+	ft_strdel(&res);
+	return (NO);
+}
+ 
+char	*detaching_self(char **ans, t_lst **t)
+{
+	*ans = bw_xor(*ans, (*t)->prev->p_sets[(*t)->prev->curr]);
+	return (*ans);
+}
+
+
+
+
+//for test.
+
+void	pretty_printer(char *shape, int space)
+{
+	int idx;
+
+	idx = -1;
+	if (!shape)
+		return ft_putstr("---------Invalid form-----------\n");
+	ft_putchar('\n');
+	while(++idx < space)
+	{
+		ft_putstr(ft_strsub(shape, idx * space , space));
+		ft_putchar('\n');
+	}
+}
+
+
 // char	*fillit_btracking(char **ans, t_lst **t)
 // {
 // 	while((*t))
@@ -134,52 +187,3 @@ char	*go_to_prev(char **ans, t_lst **t)
 // {
 	
 // }
-
-int		is_valid_set(char **ans, t_lst **t)
-{
-	char	*res;
-	int		len;
-	int		i;
-	int		counter;
-	char	*temp;
-
-	i = 0;
-	counter = 0;
-	temp = (*t)->p_sets[(*t)->curr];
-	len = ft_strlen(temp);
-	res = bw_or(*ans, temp);
-	while (IS_EXIST(res[i]) == YES)
-		counter += res[i++] == '1' ? 1 : 0;
-	if (counter == (((*t)->idx + 1) * 4))
-	{
-		ft_strdel(ans);
-		*ans = ft_strdup(res);
-		ft_strdel(&res);
-		return (YES);
-	}
-	ft_strdel(&res);
-	return (NO);
-}
- 
-char	*detaching_self(char **ans, t_lst **t)
-{
-	*ans = bw_xor(*ans, (*t)->prev->p_sets[(*t)->prev->curr]);
-	return (*ans);
-}
-
-//
-
-void	pretty_printer(char *shape, int space)
-{
-	int idx;
-
-	idx = -1;
-	if (!shape)
-		return ft_putstr("---------Invalid form-----------\n");
-	ft_putchar('\n');
-	while(++idx < space)
-	{
-		ft_putstr(ft_strsub(shape, idx * space , space));
-		ft_putchar('\n');
-	}
-}

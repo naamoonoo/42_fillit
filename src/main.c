@@ -70,12 +70,15 @@ void	freeing_whole_lst(t_lst **lst)
 		i = 0;
 		while(t->p_sets[i])
 		{
+			// printf("%c\n", *t->p_sets[i]);
+			// printf("%s\n", t->p_sets[i]);
+			// printf("%p\n", t->p_sets[i]);
+			// printf("%s\n", &t->p_sets[i]);
+			// printf("%p\n", &t->p_sets[i]);
 			free(&t->p_sets[i]);
 			i++;
-			
 		}
 		free(t->p_sets);
-
 	}
 }
 
@@ -102,21 +105,21 @@ int main(int argc, char *argv[])
 	make_fillit(&lst, idx);
 
 
-	while (lst)
-	{
-		free(lst->shape);
-		// printf("%s will be freed\n", lst->p_sets[lst->n_sets - 1]);
-		int i = 0;
-		while(lst->p_sets[i])
-		{
-			printf("%s is freed\n", lst->p_sets[i++]);
-			// free(&lst->p_sets[lst->n_sets - 1]);
+	// while (lst)
+	// {
+	// 	free(lst->shape);
+	// 	// printf("%s will be freed\n", lst->p_sets[lst->n_sets - 1]);
+	// 	int i = 0;
+	// 	while(lst->p_sets[i])
+	// 	{
+	// 		printf("%s is freed\n", lst->p_sets[i++]);
+	// 		// free(lst->p_sets[lst->n_sets - 1]);
 			
-		}
-		free(lst->p_sets);
-		free(lst);
-		lst = lst->next;
-	}
+	// 	}
+	// 	free(lst->p_sets);
+	// 	free(lst);
+	// 	lst = lst->next;
+	// }
 
 
 	freeing_whole_lst(&lst);
@@ -124,21 +127,4 @@ int main(int argc, char *argv[])
 		sleep(1);
 	
 	return (0);
-}
-
-void	remove_lst_by_idx(t_lst **lst, int idx)
-{
-	int 	i;
-	t_lst 	**t_arr;
-
-	t_arr = (t_lst **)malloc(sizeof(t_lst *) * idx);
-	while ((*lst))
-	{
-		t_arr[(*lst)->idx] = (*lst);
-		(*lst) = (*lst)->next;
-	}
-	i = 0;
-	while (t_arr[i])
-		free(t_arr[i++]);
-	free(t_arr);
 }

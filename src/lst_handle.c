@@ -20,7 +20,6 @@ void	make_chain_lst(t_lst **lst, char *buf, int *idx)
 	}
 	*idx += 1;
 	ft_memset(buf, 0, 16);
-	// free(lst);
 	(*lst) = t;
 }
 
