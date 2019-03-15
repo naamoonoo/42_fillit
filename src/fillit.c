@@ -4,33 +4,30 @@ void	make_fillit(t_lst **t, int space)
 {
 	char	*ans;
 	t_lst	*head;
-	int 	i;
+	int 	len;
 
-	i = 0;
 	head = (*t);
 	space = shape_and_sets(&head, space);
 	if (space == 3 && (ft_strlen(head->shape) != ft_strlen(head->next->shape)))
 		return (make_fillit(t, PIECE_SIZE));
-	ans = ft_memalloc(ft_pow(space, 2) + 1);
-	while (i < ft_pow(space, 2))
-		ans[i++] = '0';
+	len = ft_pow(space, 2);
+	ans = ft_memalloc(len + 1);
+	while (len-- != 0)
+		ans[len] = '0';
 	if (IS_EXIST(fillit_btracking(&ans, &head)) == YES)
 		return (print_answer(&head, space, &ans));
 	else
 	{
-		
 		while (IS_EXIST(head))
 		{	
 			free(head->shape);
 			head->shape = ft_strdup(head->p_sets[0]);
-			i = 0;
-			while(head->p_sets[head->n_sets])
+			while(head->n_sets-- != 0)
 				free(head->p_sets[head->n_sets--]);
 			free(head->p_sets);
 			head->curr = 0;
 			head = head->next;
 		}
-		// printf("%s\n",(*hesad).prev->shape);
 		ft_strdel(&ans);
 		return (make_fillit(t, space + 1));
 	}
