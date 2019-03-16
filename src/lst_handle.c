@@ -19,11 +19,11 @@ void	make_chain_lst(t_lst **lst, char *buf, int *idx)
 		(*lst)->next = t;
 	}
 	*idx += 1;
-	ft_memset(buf, 0, 16);
+	ft_bzero(buf, 16);
 	(*lst) = t;
 }
 
-int		  shape_and_sets(t_lst **head, int idx)
+int		shape_and_sets(t_lst **head, int idx)
 {
 	static int	was_3 = 0;
 	t_lst 		*t;
@@ -58,7 +58,7 @@ char 	**possilbe_sets(t_lst **lst, int space)
 		return (NULL);
 	i = 0;
 	idx = 0;
-	p_sets[idx++] = (*lst)->shape;
+	p_sets[idx++] = ft_strdup((*lst)->shape);
 	horizontal = mov_amount(lst, 'h', space);
 	vertical = mov_amount(lst, 'v', space);
 	while (i < vertical)
@@ -108,3 +108,5 @@ int		mov_amount(t_lst **lst, char way, int space)
 		return (hrz * vtc);
 	return (0);
 }
+
+//이거 두개로 찢고

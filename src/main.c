@@ -60,25 +60,16 @@ int		two_by_two_one_piece(t_lst **head)
 void	freeing_whole_lst(t_lst **lst)
 {
 	int		i;
-	t_lst	*t;
 
 	while ((*lst))
 	{
-		t = (*lst);
-		(*lst) = (*lst)->next;
-		free(&t->shape);
+		free((*lst)->shape);
 		i = 0;
-		while(t->p_sets[i])
-		{
-			// printf("%c\n", *t->p_sets[i]);
-			// printf("%s\n", t->p_sets[i]);
-			// printf("%p\n", t->p_sets[i]);
-			// printf("%s\n", &t->p_sets[i]);
-			// printf("%p\n", &t->p_sets[i]);
-			free(&t->p_sets[i]);
-			i++;
-		}
-		free(t->p_sets);
+		while((*lst)->p_sets[i])
+			free((*lst)->p_sets[i++]);
+		free((*lst)->p_sets);
+		free((*lst));
+		(*lst) = (*lst)->next;
 	}
 }
 

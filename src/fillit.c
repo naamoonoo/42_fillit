@@ -23,7 +23,7 @@ void	make_fillit(t_lst **t, int space)
 			free(head->shape);
 			head->shape = ft_strdup(head->p_sets[0]);
 			while(head->n_sets-- != 0)
-				free(head->p_sets[head->n_sets--]);
+				free(head->p_sets[head->n_sets]);
 			free(head->p_sets);
 			head->curr = 0;
 			head = head->next;
@@ -33,28 +33,26 @@ void	make_fillit(t_lst **t, int space)
 	}
 }
 
+
 char	*fillit_btracking(char **ans, t_lst **t)
 {
 	if (is_valid_set(ans, t) == YES)
+	{
 		if (IS_EXIST((*t)->next) == YES)
-		{
-			// printf("나는 넣었음, 다음꺼 넣으러 갑시다!\n");
 			return (fillit_btracking(ans, &((*t)->next)));
-		}
-	if (is_valid_set(ans, t) == NO)
+		else
+			return (*ans);
+	}	
+	else
 	{
 		if ((*t)->curr + 1 != (*t)->n_sets)
 		{
 			(*t)->curr += 1;
-			// printf("나는 안되고 내 다음애 있으니까 걔 넣어보셈\n");
 			return (fillit_btracking(ans, t));
 		}
 		else
-		// {printf("나는 이미글름, 내 앞에 애로 가쟈\n");
-				return (go_to_prev(ans, t));
-				// }
+			return (go_to_prev(ans, t));
 	}
-	return (*ans);
 }
 
 char	*go_to_prev(char **ans, t_lst **t)
@@ -64,19 +62,15 @@ char	*go_to_prev(char **ans, t_lst **t)
 	if ((*t)->prev->curr + 1 != (*t)->prev->n_sets)
 	{
 		(*t)->prev->curr += 1;
-		// printf("내 앞에놈 하나더 옮겨볼수있음\n");
 		return (fillit_btracking(ans, &(*t)->prev));
 	}
 	else
 	{
 		(*t)->prev->curr = 0;
 		if (IS_EXIST((*t)->prev->prev) == NO)
-		// {printf("내 앞에 앞에놈도 더이상 못옮긴댜\n");
 			return (NULL);
-			// }
 		detaching_self(ans, &(*t)->prev);	
 		(*t)->prev->prev->curr += 1;
-		// printf("휴 내 앞에 앞에놈 하나 더 ㄱㄴ 고고링\n");
 		return (fillit_btracking(ans, &(*t)->prev->prev));
 	}
 }
