@@ -78,8 +78,10 @@ int main(int argc, char *argv[])
 	int		fd;
 	int		idx;
 	t_lst	*lst;
+	// char	*ans;
 
 	idx = 0;
+	// ans = NULL;
 	if (argc != 2)
 	{
 		ft_putstr("./fillit filename\n");
@@ -93,6 +95,7 @@ int main(int argc, char *argv[])
 		lst = lst->prev;
 	if (idx == 1 && two_by_two_one_piece(&lst))
 		return (0);
+	// prepare_fillit(&lst, idx, &ans);
 	make_fillit(&lst, idx);
 
 
@@ -114,8 +117,8 @@ int main(int argc, char *argv[])
 
 
 	freeing_whole_lst(&lst);
-	while(1)
-		sleep(1);
+	// while(1)
+	// 	sleep(1);
 	
 	return (0);
 }

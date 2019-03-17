@@ -26,18 +26,26 @@ void	make_chain_lst(t_lst **lst, char *buf, int *idx)
 int		shape_and_sets(t_lst **head, int idx)
 {
 	static int	was_3 = 0;
+	static int 	ct = 0;
 	t_lst 		*t;
 	int			space;
 	
-	space = 4;
-	while (4 * idx > ft_pow(space, 2))
-		space++;
+	if (ct++ == 0)
+	{
+		space = 4;
+		while (4 * idx > ft_pow(space, 2))
+			space++;
+	}
+	else
+		space = idx + 1;
 	t = (*head);
 	was_3 += idx == 2 ? 1 : 0;
+	// printf("space is %d\n", space);
 	while (IS_EXIST(t) == YES)
 	{
-		idx == 2 && was_3 == 1 ? adjust_shape_for_small(&t, &space) : 
-			adjust_shape_by_space(&t, space, was_3 == 1 ? 3 : PIECE_SIZE);
+		idx == 2 && was_3 == 1 ? 
+			adjust_shape_for_small(&t, &space) : 
+			adjust_shape_by_space(&t, space, ct == 1 ? 4 : space - 1);
 		t->p_sets = possilbe_sets(&t, space);
 		t = t->next;
 	}

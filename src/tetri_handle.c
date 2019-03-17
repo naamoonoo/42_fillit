@@ -94,6 +94,7 @@ void	adjust_shape_by_space(t_lst **t, int space, int tab)
 	temp[ft_pow(space, 2)] = '\0';
 	ft_strdel(&((*t)->shape));
 	(*t)->shape = ft_strdup(temp);
+	// pretty_printer((*t)->shape, space);
 	ft_strdel(&temp);
 }
 

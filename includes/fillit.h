@@ -60,8 +60,9 @@ void	put_top_left(char **shape, int space);
 */
 
 void	make_fillit(t_lst **t, int space);
-char	*fillit_btracking(char **ans, t_lst **t);
-char	*go_to_prev(char **ans, t_lst **t);
+int		fillit_btracking(char **ans, t_lst **t);
+// char	*go_to_prev(char **ans, t_lst **t);
+int		check_is_valid_set(char **ans, t_lst **t);
 int		is_valid_set(char **ans, t_lst **t);
 char	*detaching_self(char **ans, t_lst **t);
 
