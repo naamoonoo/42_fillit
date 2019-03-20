@@ -17,7 +17,7 @@ char	*ft_move(char *t, char direction, int space)
 		temp = bw_shift_left(t, 1);
 	if (is_same_shape(t, temp, space) == YES)
 		return (temp);
-	ft_strdel(&temp); // it has invalid form free!
+	ft_strdel(&temp);
 	return (NULL);
 }
 
@@ -94,7 +94,6 @@ void	adjust_shape_by_space(t_lst **t, int space, int tab)
 	temp[ft_pow(space, 2)] = '\0';
 	ft_strdel(&((*t)->shape));
 	(*t)->shape = ft_strdup(temp);
-	// pretty_printer((*t)->shape, space);
 	ft_strdel(&temp);
 }
 
@@ -104,7 +103,7 @@ void		adjust_shape_for_small(t_lst **t, int *space)
 	int		j;
 	int		count;
 	char	*tmp;
-	//space should be 3!!!!
+
 	i = -1;
 	count = 0;
 	tmp = ft_memalloc(ft_pow(3, 2) + 1);

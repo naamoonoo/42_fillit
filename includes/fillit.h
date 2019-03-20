@@ -2,8 +2,6 @@
 # define FILLIT_H
 
 #include "libft.h"
-// #include "jfj.h"
-#include <stdio.h> //!!!!!!delete
 
 # define PIECE_SIZE 4
 # define ERROR -1
@@ -42,7 +40,8 @@ char	*get_shape_hori(char *shape, int space);
 void	make_chain_lst(t_lst **lst, char *buf, int *idx);
 int		shape_and_sets(t_lst **head, int space);
 char 	**possilbe_sets(t_lst **lst, int space);
-int		mov_amount(t_lst **lst, char way, int space);
+int		mov_amount_horizon(t_lst **lst, int space);
+int		mov_amount_vertical(t_lst **lst, int space);
 
 /* 
 ** -------------------tetrimono handle-------------------
@@ -61,7 +60,6 @@ void	put_top_left(char **shape, int space);
 
 void	make_fillit(t_lst **t, int space);
 int		fillit_btracking(char **ans, t_lst **t);
-// char	*go_to_prev(char **ans, t_lst **t);
 int		check_is_valid_set(char **ans, t_lst **t);
 int		is_valid_set(char **ans, t_lst **t);
 char	*detaching_self(char **ans, t_lst **t);
@@ -78,16 +76,13 @@ char	*bw_shift_left(char *b1, size_t amount);
 char	*bw_shift_right(char *b1, size_t amount);
 
 /* 
-** -------------------result print-------------------
+** -------------------Helper function-------------------
 */
 
-void	print_answer(t_lst **t, int space, char **ans);
+void	print_answer(t_lst **t, int space);
 int		print_error(void);
-
-void	pretty_printer(char *shape, int space);
 void	freeing_whole_lst(t_lst **lst);
-
-
-// void	testing_tool(char *shape, char dir);
+void	make_default(t_lst **t, char **ans);
+void	pretty_printer(char *res, int space);
 
 #endif
