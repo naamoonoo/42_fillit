@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hnam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/19 23:23:17 by hnam              #+#    #+#             */
+/*   Updated: 2019/03/19 23:23:19 by hnam             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
 int main(int argc, char *argv[])
@@ -18,14 +30,13 @@ int main(int argc, char *argv[])
 		return (print_error());
 	while(lst->prev)
 		lst = lst->prev;
-	if (idx == 1 && ft_strcmp(lst->shape, "1100110000000000"))
+	if (idx == 1 && ft_strcmp(lst->shape,
+		 "1100110000000000") == 0)
 	{
 		ft_putstr(MIN_SQUARE);
 		return (0);
 	}
 	make_fillit(&lst, idx);
 	freeing_whole_lst(&lst);
-	// while(1)
-	// 	sleep(1);
 	return (0);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   helper.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hnam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/19 23:23:44 by hnam              #+#    #+#             */
+/*   Updated: 2019/03/19 23:23:45 by hnam             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
 void	make_default(t_lst **t, char **ans)
@@ -64,15 +76,17 @@ int		print_error(void)
 void	freeing_whole_lst(t_lst **lst)
 {
 	int		i;
+	t_lst	*t;
 
 	while ((*lst))
 	{
-		free((*lst)->shape);
+		t = (*lst);
+		(*lst) = t->next;
+		free(t->shape);
 		i = 0;
-		while((*lst)->p_sets[i])
-			free((*lst)->p_sets[i++]);
-		free((*lst)->p_sets);
-		free((*lst));
-		(*lst) = (*lst)->next;
+		while(t->p_sets[i])
+			free(t->p_sets[i++]);
+		free(t->p_sets);
+		free(t);
 	}
 }

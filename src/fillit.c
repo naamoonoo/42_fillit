@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fillit.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hnam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/19 23:23:32 by hnam              #+#    #+#             */
+/*   Updated: 2019/03/19 23:23:33 by hnam             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
 void	make_fillit(t_lst **t, int space)
@@ -94,7 +106,12 @@ int		is_valid_set(char **ans, t_lst **t)
  
 char	*detaching_self(char **ans, t_lst **t)
 {
-	*ans = bw_xor(*ans, (*t)->prev->p_sets[(*t)->prev->curr]);
+	char	*temp;
+
+	temp = bw_xor(*ans, (*t)->prev->p_sets[(*t)->prev->curr]);
+	ft_strdel(ans);
+	*ans = ft_strdup(temp);
+	ft_strdel(&temp);
 	(*t)->prev->curr += 1;
 	return (*ans);
 }

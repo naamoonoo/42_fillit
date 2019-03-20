@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnam <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/13 23:40:14 by hnam              #+#    #+#             */
-/*   Updated: 2019/02/13 23:40:22 by hnam             ###   ########.fr       */
+/*   Created: 2019/03/19 23:24:35 by hnam              #+#    #+#             */
+/*   Updated: 2019/03/19 23:24:39 by hnam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/stat.h>
-# include <limits.h> //check https://projects.intra.42.fr/get_next_line/agusev 
+# include <limits.h> 
 
 # define BUFF_SIZE 32 
-# define MAX_FD 10000	// if he test success -> git push git/get_next_line_42 and update here too!
+# define MAX_FD 10000
 
 typedef struct		s_list
 {
