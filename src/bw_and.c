@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bw_and.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: bkjornra <bkjornra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 23:23:04 by hnam              #+#    #+#             */
-/*   Updated: 2019/03/19 23:23:05 by hnam             ###   ########.fr       */
+/*   Updated: 2019/03/20 01:45:38 by bkjornra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ char	*bw_and(char *b1, char *b2)
 {
 	size_t	i;
 	size_t	len;
-	char 	*res;
-	
+	char	*res;
+
 	if (!b1 || !b2)
 		return (NULL);
 	i = 0;

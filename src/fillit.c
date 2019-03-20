@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: bkjornra <bkjornra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 23:23:32 by hnam              #+#    #+#             */
-/*   Updated: 2019/03/19 23:23:33 by hnam             ###   ########.fr       */
+/*   Updated: 2019/03/20 00:49:16 by bkjornra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	make_fillit(t_lst **t, int space)
 {
 	char	*ans;
 	t_lst	*head;
-	int 	len;
+	int		len;
 
 	head = (*t);
 	space = shape_and_sets(&head, space);
@@ -103,7 +103,7 @@ int		is_valid_set(char **ans, t_lst **t)
 	ft_strdel(&res);
 	return (NO);
 }
- 
+
 char	*detaching_self(char **ans, t_lst **t)
 {
 	char	*temp;

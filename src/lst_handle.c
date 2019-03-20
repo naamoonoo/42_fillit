@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_handle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: bkjornra <bkjornra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 23:24:16 by hnam              #+#    #+#             */
-/*   Updated: 2019/03/19 23:24:17 by hnam             ###   ########.fr       */
+/*   Updated: 2019/03/20 02:12:26 by bkjornra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@ void	make_chain_lst(t_lst **lst, char *buf, int *idx)
 
 int		shape_and_sets(t_lst **head, int idx)
 {
-	static int 	call = 0;
-	t_lst 		*t;
+	static int	call = 0;
+	t_lst		*t;
 	int			space;
-	
+	int			tab;
+
 	if (call++ == 0)
 	{
 		space = 4;
@@ -50,36 +51,33 @@ int		shape_and_sets(t_lst **head, int idx)
 	else
 		space = idx + 1;
 	t = (*head);
+	tab = call == 1 ? 4 : space - 1;
 	while (IS_EXIST(t) == YES)
 	{
-		idx == 2 && call == 1 ? 
-			adjust_shape_for_small(&t, &space) : 
-			adjust_shape_by_space(&t, space, call == 1 ? 4 : space - 1);
-		t->n_sets = (mov_amount_horizon(&t, space) * 
-			mov_amount_vertical(&t, space));
-		t->p_sets = possilbe_sets(&t, space);
+		idx == 2 && call == 1 ? adjust_shape_for_small(&t, &space) :
+			adjust_shape_by_space(&t, space, tab);
+		t->n_sets = mov_amount_hrz(&t, space) * mov_amount_vtc(&t, space);
+		t->p_sets = possible_sets(&t, space);
 		t = t->next;
 	}
 	return (space);
 }
 
-char 	**possilbe_sets(t_lst **lst, int space)
+char	**possible_sets(t_lst **lst, int space)
 {
 	char	**p_sets;
 	int		horizontal;
-	int		vertical;
 	int		i;
 	int		idx;
 	char	*tmp;
 
 	i = 0;
 	idx = 0;
-	horizontal = mov_amount_horizon(lst, space);
-	vertical = mov_amount_vertical(lst, space);
-	if(!(p_sets = (char **)malloc(sizeof(char *) * ((*lst)->n_sets + 1))))
+	horizontal = mov_amount_hrz(lst, space);
+	if (!(p_sets = (char **)malloc(sizeof(char *) * ((*lst)->n_sets + 1))))
 		return (NULL);
 	p_sets[idx++] = ft_strdup((*lst)->shape);
-	while (i < vertical)
+	while (i < mov_amount_vtc(lst, space))
 	{
 		while ((tmp = ft_move(p_sets[idx - 1], 'r', space)))
 		{
@@ -92,11 +90,11 @@ char 	**possilbe_sets(t_lst **lst, int space)
 	return (p_sets);
 }
 
-int		mov_amount_vertical(t_lst **lst, int space)
+int		mov_amount_vtc(t_lst **lst, int space)
 {
-	int vtc;
-	char *shape;
-	char *temp;
+	int		vtc;
+	char	*shape;
+	char	*temp;
 
 	vtc = 1;
 	shape = ft_strdup((*lst)->shape);
@@ -113,11 +111,11 @@ int		mov_amount_vertical(t_lst **lst, int space)
 	return (vtc);
 }
 
-int		mov_amount_horizon(t_lst **lst, int space)
+int		mov_amount_hrz(t_lst **lst, int space)
 {
-	int hrz;
-	char *shape;
-	char *temp;
+	int		hrz;
+	char	*shape;
+	char	*temp;
 
 	hrz = 1;
 	shape = ft_strdup((*lst)->shape);

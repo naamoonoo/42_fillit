@@ -6,7 +6,7 @@
 /*   By: bkjornra <bkjornra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 23:23:37 by hnam              #+#    #+#             */
-/*   Updated: 2019/03/20 00:19:03 by bkjornra         ###   ########.fr       */
+/*   Updated: 2019/03/20 02:14:19 by bkjornra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int		reading_tetrimono(int fd, t_lst **lst, int *idx)
 {
-	char	buf[17] = { 0 };
+	char	buf[17];
 	char	*temp;
 	int		count;
-	
+
 	count = 0;
 	while (get_next_line(fd, &temp) > 0)
 	{
@@ -63,10 +63,10 @@ int		converter(char *buf, int *count)
 
 int		is_valid_shape(char *shape)
 {
-	int i;
-	int count;
-	int sum_of_hor_vert;
-	char *temp;
+	int		i;
+	int		count;
+	int		sum_of_hor_vert;
+	char	*temp;
 
 	i = 0;
 	count = 0;
@@ -91,19 +91,17 @@ int		is_valid_shape(char *shape)
 
 char	*get_shape_vert(char *shape, int space)
 {
-	int i;
-	int j;
-	int temp;
-	int width;
-	char *tmp;
-	char *res;
+	int		i;
+	int		j;
+	int		temp;
+	char	*tmp;
+	char	*res;
 
 	i = 0;
 	j = 0;
 	temp = 0;
-	width = ft_pow(space, 2);
 	tmp = ft_memalloc(space + 1);
-	while (i < width)
+	while (i < ft_pow(space, 2))
 	{
 		temp += shape[i++] == '1' ? 1 : 0;
 		if (i % space == 0)
@@ -120,10 +118,10 @@ char	*get_shape_vert(char *shape, int space)
 
 char	*get_shape_hori(char *shape, int space)
 {
-	int i;
-	int j;
-	char *temp;
-	char *res;
+	int		i;
+	int		j;
+	char	*temp;
+	char	*res;
 
 	i = -1;
 	temp = ft_memalloc(space + 1);

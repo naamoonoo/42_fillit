@@ -3,26 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: bkjornra <bkjornra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 00:35:41 by hnam              #+#    #+#             */
-/*   Updated: 2019/03/20 00:35:45 by hnam             ###   ########.fr       */
+/*   Updated: 2019/03/20 02:15:43 by bkjornra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-#include <stdio.h>
-
-
-
-static char	*make_base_set(char *base, int str_base)
+static char		*make_base_set(char *base, int str_base)
 {
 	int		i;
-	char	base_set[] = "0123456789abcdef";
+	char	*base_set;
 
 	i = -1;
-	if(!(base = (char *)malloc(sizeof(char) * (str_base + 1))))
+	base_set = "0123456789abcdef";
+	if (!(base = (char *)malloc(sizeof(char) * (str_base + 1))))
 		return (NULL);
 	while (++i < str_base)
 		base[i] = base_set[i];
@@ -30,7 +27,7 @@ static char	*make_base_set(char *base, int str_base)
 	return (base);
 }
 
-char	*ft_itoa_base(int n, int str_base, int len)
+char			*ft_itoa_base(int n, int str_base, int len)
 {
 	char	*res;
 	char	*base_set;

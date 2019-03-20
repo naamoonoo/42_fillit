@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bw_not.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: bkjornra <bkjornra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 23:23:27 by hnam              #+#    #+#             */
-/*   Updated: 2019/03/19 23:23:28 by hnam             ###   ########.fr       */
+/*   Updated: 2019/03/20 00:42:59 by bkjornra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ char	*bw_not(char *b1)
 {
 	size_t	i;
 	size_t	len;
-	char 	*res;
-	
+	char	*res;
+
 	i = 0;
-	if(!b1)
+	if (!b1)
 		return (NULL);
 	len = ft_strlen(b1);
 	res = ft_memalloc(len + 1);

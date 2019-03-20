@@ -6,7 +6,7 @@
 /*   By: bkjornra <bkjornra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 23:24:35 by hnam              #+#    #+#             */
-/*   Updated: 2019/03/20 00:12:06 by bkjornra         ###   ########.fr       */
+/*   Updated: 2019/03/20 01:43:05 by bkjornra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/stat.h>
-# include <limits.h> 
+# include <limits.h>
 
-# define BUFF_SIZE 32 
+# define BUFF_SIZE 32
 # define MAX_FD 10000
 
 typedef struct		s_list

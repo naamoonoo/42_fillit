@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: bkjornra <bkjornra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 00:35:30 by hnam              #+#    #+#             */
-/*   Updated: 2019/03/20 00:35:35 by hnam             ###   ########.fr       */
+/*   Updated: 2019/03/20 01:53:11 by bkjornra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 static char	*make_base(char *base, int str_base)
 {
 	int		i;
-	char	base_set[] = "0123456789abcdef";
 
 	i = -1;
 	while (++i < str_base)
-		base[i] = base_set[i];
+		base[i] = "0123456789abcdef"[i];
 	base[i] = '\0';
 	return (base);
 }
