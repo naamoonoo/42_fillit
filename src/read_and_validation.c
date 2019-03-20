@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_and_validation.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: bkjornra <bkjornra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 23:23:37 by hnam              #+#    #+#             */
-/*   Updated: 2019/03/19 23:23:38 by hnam             ###   ########.fr       */
+/*   Updated: 2019/03/20 00:19:03 by bkjornra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int		reading_tetrimono(int fd, t_lst **lst, int *idx)
 	{
 		ft_strcat(buf, temp);
 		count++;
-		if (ft_strlen(buf) > 16 || ft_strlen(temp) > 4 || ft_strlen(buf) % 4 != 0)
+		if (ft_strlen(buf) > 16 || ft_strlen(temp) > 4
+			|| ft_strlen(buf) % 4 != 0)
 			return (ERROR);
 		else if (ft_strlen(buf) == 16 && count == 5)
 		{
@@ -85,9 +86,7 @@ int		is_valid_shape(char *shape)
 		return (ERROR);
 	sum_of_hor_vert += ft_strlen(temp);
 	ft_strdel(&temp);
-	if (sum_of_hor_vert != 4 && sum_of_hor_vert != 5)
-		return (ERROR);
-	return (0);
+	return ((sum_of_hor_vert != 4 && sum_of_hor_vert != 5) ? ERROR : 0);
 }
 
 char	*get_shape_vert(char *shape, int space)

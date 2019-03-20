@@ -1,4 +1,4 @@
-NAME=fillit
+NAME = fillit
 
 SRC=$(wildcard src/*.c)
 CC=gcc

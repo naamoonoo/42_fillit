@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: bkjornra <bkjornra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 23:24:35 by hnam              #+#    #+#             */
-/*   Updated: 2019/03/19 23:24:39 by hnam             ###   ########.fr       */
+/*   Updated: 2019/03/20 00:12:06 by bkjornra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int					ft_hidenp(char *s1, char *s2);
 int					ft_strchr_idx(const char *s, int c);
 char				*ft_strtrim_by(char const *s, char condition);
 
-
 /*
 **---------------------number descriptor---------------------
 */
@@ -105,8 +104,6 @@ int					ft_pgcd(int a, int b);
 void				ft_itoa_minus_handling(int *n, char *res, int *len, int *i);
 char				*ft_itoa(int n);
 char				*ft_itoa_base(int n, int str_base, int len);
-
-
 
 /*
 **---------------------checking---------------------
